@@ -1,7 +1,9 @@
 var users = [];
+var table;
 
 $(document).ready(()=>{
     getUserData();
+    loadActionListeners();
 })
 
 async function getUserData(){
@@ -21,8 +23,8 @@ async function getUserData(){
 
 function printTable(content){
 
-    $('#usersTable').DataTable({
-        data: users,
+    table = $('#usersTable').DataTable({
+        data: content,
         columns: [
             { 
                 "className": "details-control",
@@ -50,5 +52,23 @@ function printTable(content){
         console.log('Hello from id!');
     });
 
+
 }
 
+function loadActionListeners(){
+    $('#clearTable').on('click', function(){
+        table.clear();
+        table.destroy();
+    });
+
+    $('#loadTable').on('click', function(){
+        let content = [];
+        users.forEach(user => {
+            if(user.gender == 'Female'){
+                content.push(user);
+            }
+        })
+        console.log(content);
+        printTable(content);
+    })
+}
